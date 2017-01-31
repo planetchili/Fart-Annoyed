@@ -29,6 +29,7 @@ Game::Game( MainWindow& wnd )
 	walls( 0.0f,float( gfx.ScreenWidth ),0.0f,float( gfx.ScreenHeight ) ),
 	soundPad( L"Sounds\\arkpad.wav" ),
 	soundBrick( L"Sounds\\arkbrick.wav" ),
+	soundFart( L"Sounds\\fart.wav" ),
 	pad( Vec2( 400.0f,500.0f ),50.0f,15.0f )
 {
 	const Color colors[4] = { Colors::Red,Colors::Green,Colors::Blue,Colors::Cyan };
@@ -64,62 +65,74 @@ void Game::Go()
 }
 
 void Game::UpdateModel( float dt )
-{	
-	pad.Update( wnd.kbd,dt );
-	pad.DoWallCollision( walls );
-
-	ball.Update( dt );
-	
-	bool collisionHappened = false;
-	float curColDistSq;
-	int curColIndex;
-	for( int i = 0; i < nBricks; i++ )
+{
+	if( !gameIsOver )
 	{
-		if( bricks[i].CheckBallCollision( ball ) )
+		pad.Update( wnd.kbd,dt );
+		pad.DoWallCollision( walls );
+
+		ball.Update( dt );
+
+		bool collisionHappened = false;
+		float curColDistSq;
+		int curColIndex;
+		for( int i = 0; i < nBricks; i++ )
 		{
-			const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
-			if( collisionHappened )
+			if( bricks[i].CheckBallCollision( ball ) )
 			{
-				if( newColDistSq < curColDistSq )
+				const float newColDistSq = (ball.GetPosition() - bricks[i].GetCenter()).GetLengthSq();
+				if( collisionHappened )
+				{
+					if( newColDistSq < curColDistSq )
+					{
+						curColDistSq = newColDistSq;
+						curColIndex = i;
+					}
+				}
+				else
 				{
 					curColDistSq = newColDistSq;
 					curColIndex = i;
+					collisionHappened = true;
 				}
 			}
-			else
-			{
-				curColDistSq = newColDistSq;
-				curColIndex = i;
-				collisionHappened = true;
-			}
 		}
-	}
 
-	if( collisionHappened )
-	{
-		pad.ResetCooldown();
-		bricks[curColIndex].ExecuteBallCollision( ball );
-		soundBrick.Play();
-	}
+		if( collisionHappened )
+		{
+			pad.ResetCooldown();
+			bricks[curColIndex].ExecuteBallCollision( ball );
+			soundBrick.Play();
+		}
 
-	if( pad.DoBallCollision( ball ) )
-	{
-		soundPad.Play();
-	}
+		if( pad.DoBallCollision( ball ) )
+		{
+			soundPad.Play();
+		}
 
-	if( ball.DoWallCollision( walls ) )
-	{
-		pad.ResetCooldown();
-		soundPad.Play();
+		const int ballWallColResult = ball.DoWallCollision( walls );
+		if( ballWallColResult == 1 )
+		{
+			pad.ResetCooldown();
+			soundPad.Play();
+		}
+		else if( ballWallColResult == 2 )
+		{
+			gameIsOver = true;
+			soundFart.Play();
+		}
 	}
 }
 
 void Game::ComposeFrame()
 {
-	ball.Draw( gfx );
+	if( !gameIsOver )
+	{
+		ball.Draw( gfx );
+		pad.Draw( gfx );
+	}
 	for( const Brick& b : bricks )
 	{
 		b.Draw( gfx );
 	}
-	pad.Draw( gfx );
 }

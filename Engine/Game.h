@@ -57,7 +57,9 @@ private:
 	Brick bricks[nBricks];
 	Paddle pad;
 	RectF walls;
+	bool gameIsOver = false;
 	Sound soundPad;
 	Sound soundBrick;
+	Sound soundFart;
 	/********************************/
 };
