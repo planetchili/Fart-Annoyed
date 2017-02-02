@@ -18,14 +18,21 @@ public:
 	RectF GetRect() const;
 	void ResetCooldown();
 private:
+	static constexpr Color wingColor = Colors::Red;
+	static constexpr Color color = Colors::White;
 	static constexpr float wingWidth = 18.0f;
-	Color wingColor = Colors::Red;
-	Color color = Colors::White;
-	float speed = 300.0f;
-	float exitXFactor = 0.045f;
-	float fixedZoneHalfWidth = 15.0f;
+	static constexpr float speed = 300.0f;
+	// control the paddle rebound behavior here
+	static constexpr float maximumExitRatio = 2.6f;
+	static constexpr float fixedZoneWidthRatio = 0.2f;
+	// ----------------------------------------
 	float halfWidth;
 	float halfHeight;
+	// these are derived from above controls
+	float exitXFactor;
+	float fixedZoneHalfWidth;
+	float fixedZoneExitX;
+	// -------------------------------------
 	Vec2 pos;
 	bool isCooldown = false;
 };
