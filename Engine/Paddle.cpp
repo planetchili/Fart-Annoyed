@@ -28,7 +28,9 @@ bool Paddle::DoBallCollision( Ball & ball )
 			if( std::signbit( ball.GetVelocity().x ) == std::signbit( (ballPos - pos).x )
 				|| ( ballPos.x >= rect.left && ballPos.x <= rect.right ) )
 			{
-				ball.ReboundY();
+				const float xDifference = ballPos.x - pos.x;
+				const Vec2 dir( xDifference,-1.0f );
+				ball.SetDirection( dir );
 			}
 			else
 			{
