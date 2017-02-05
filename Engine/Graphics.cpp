@@ -307,6 +307,11 @@ void Graphics::BeginFrame()
 	memset( pSysBuffer,0u,sizeof( Color ) * Graphics::ScreenHeight * Graphics::ScreenWidth );
 }
 
+RectF Graphics::GetScreenRect()
+{
+	return { 0.0f,float( ScreenWidth ),0.0f,float( ScreenHeight ) };
+}
+
 void Graphics::PutPixel( int x,int y,Color c )
 {
 	assert( x >= 0 );

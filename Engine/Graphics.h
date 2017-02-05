@@ -68,6 +68,7 @@ public:
 	void DrawIsoRightTriBL( int x,int y,int size,Color c );
 	void DrawIsoRightTriBR( int x,int y,int size,Color c );
 	~Graphics();
+	static RectF GetScreenRect();
 private:
 	Microsoft::WRL::ComPtr<IDXGISwapChain>				pSwapChain;
 	Microsoft::WRL::ComPtr<ID3D11Device>				pDevice;
