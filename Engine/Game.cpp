@@ -20,6 +20,7 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
+#include "SpriteCodex.h"
 
 Game::Game( MainWindow& wnd )
 	:
@@ -64,7 +65,7 @@ void Game::Go()
 
 void Game::UpdateModel( float dt )
 {
-	if( !gameIsOver )
+	if( gameState == 1 )
 	{
 		pad.Update( wnd.kbd,dt );
 		pad.DoWallCollision( walls.GetInnerBounds() );
@@ -116,22 +117,40 @@ void Game::UpdateModel( float dt )
 		}
 		else if( ballWallColResult == 2 )
 		{
-			gameIsOver = true;
+			gameState = 2;
 			soundFart.Play();
+		}
+	}
+	else if( gameState == 0 )
+	{
+		if( wnd.kbd.KeyIsPressed( VK_RETURN ) )
+		{
+			gameState = 1;
 		}
 	}
 }
 
 void Game::ComposeFrame()
 {
-	if( !gameIsOver )
+	if( gameState == 1 )
 	{
 		ball.Draw( gfx );
 		pad.Draw( gfx );
 	}
-	for( const Brick& b : bricks )
+	if( gameState != 0 )
 	{
-		b.Draw( gfx );
+		for( const Brick& b : bricks )
+		{
+			b.Draw( gfx );
+		}
+		walls.Draw( gfx );
 	}
-	walls.Draw( gfx );
+	if( gameState == 0 )
+	{
+		SpriteCodex::DrawTitle( Graphics::GetScreenRect().GetCenter(),gfx );
+	}
+	else if( gameState == 2 )
+	{
+		SpriteCodex::DrawGameOver( Graphics::GetScreenRect().GetCenter(),gfx );
+	}
 }
