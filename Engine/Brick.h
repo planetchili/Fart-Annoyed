@@ -16,7 +16,7 @@ public:
 	void ExecuteBallCollision( Ball& ball );
 	Vec2 GetCenter() const;
 private:
-	static constexpr float padding = 1.0f;
+	static constexpr float padding = 0.5f;
 	static constexpr int bevelSize = 3;
 	Beveler bev;
 	RectF rect;
