@@ -27,24 +27,22 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	ball( Vec2( 300.0f + 24.0f,300.0f ),Vec2( -1.0f,-1.0f ) ),
-	walls( Graphics::GetScreenRect().GetExpanded( -40.0f ),40.0f,{ 20,60,200 } ),
+	walls( RectF::FromCenter( Graphics::GetScreenRect().GetCenter(),fieldWidth / 2.0f,fieldHeight / 2.0f ),
+		   wallThickness,wallColor ),
 	soundPad( L"Sounds\\arkpad.wav" ),
 	soundBrick( L"Sounds\\arkbrick.wav" ),
 	soundFart( L"Sounds\\fart.wav" ),
-	pad( Vec2( 400.0f,500.0f ),50.0f,15.0f )
+	pad( Vec2( 400.0f,550.0f ),32.0f,6.0f )
 {
-	const Color colors[4] = { Colors::Red,Colors::Green,Colors::Blue,Colors::Cyan };
-
-	const Vec2 topLeft( 40.0f,40.0f );
-
-	int i = 0;
+	const Vec2 gridTopLeft( walls.GetInnerBounds().left,walls.GetInnerBounds().top + topSpace );
+	int i = 0; 
 	for( int y = 0; y < nBricksDown; y++ )
 	{
-		const Color c = colors[y];
+		const Color c = brickColors[y];
 		for( int x = 0; x < nBricksAcross; x++ )
 		{
 			bricks[i] = Brick( RectF(
-				topLeft + Vec2( x * brickWidth,y * brickHeight ),
+				gridTopLeft + Vec2( x * brickWidth,y * brickHeight ),
 				brickWidth,brickHeight ),c );
 			i++;
 		}
