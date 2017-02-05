@@ -136,7 +136,4 @@ void Game::ComposeFrame()
 	{
 		b.Draw( gfx );
 	}
-
-	const Beveler bev( Color{ 220,205,0 } );
-	bev.DrawBevelFrame( RectF{ Vec2{ 100.0f,100.0f },300.0f,300.0f },15,gfx );
 }
