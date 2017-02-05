@@ -44,6 +44,7 @@ private:
 	/********************************/
 	/*  User Functions              */
 	void StartRound();
+	void ResetBall();
 	/********************************/
 private:
 	MainWindow& wnd;

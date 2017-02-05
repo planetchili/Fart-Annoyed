@@ -26,7 +26,6 @@ Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Graphics::GetScreenRect().GetCenter(),Vec2( -0.5f,-1.0f ) ),
 	walls( RectF::FromCenter( Graphics::GetScreenRect().GetCenter(),fieldWidth / 2.0f,fieldHeight / 2.0f ),
 		   wallThickness,wallColor ),
 	soundPad( L"Sounds\\arkpad.wav" ),
@@ -49,6 +48,7 @@ Game::Game( MainWindow& wnd )
 			i++;
 		}
 	}
+	ResetBall();
 }
 
 void Game::Go()
@@ -120,6 +120,7 @@ void Game::UpdateModel( float dt )
 		else if( ballWallColResult == 2 )
 		{
 			StartRound();
+			ResetBall();
 			soundFart.Play();
 		}
 	}
@@ -154,6 +155,11 @@ void Game::StartRound()
 	{
 		gameState = 2;
 	}
+}
+
+void Game::ResetBall()
+{
+	ball = Ball( Graphics::GetScreenRect().GetCenter(),Vec2( -0.5f,-1.0f ) );
 }
 
 void Game::ComposeFrame()
