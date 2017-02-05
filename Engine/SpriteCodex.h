@@ -14,4 +14,6 @@ public:
 	static void SpriteCodex::DrawGameOver( const Vec2& center,Graphics& gfx );
 	// centered drawing of 104x19 sprite
 	static void SpriteCodex::DrawReady( const Vec2& center,Graphics& gfx );
+	// centered drawing of 24x24 sprite
+	static void SpriteCodex::DrawPoo( const Vec2& center,Graphics& gfx );
 };
