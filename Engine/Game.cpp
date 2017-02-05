@@ -32,6 +32,7 @@ Game::Game( MainWindow& wnd )
 	soundPad( L"Sounds\\arkpad.wav" ),
 	soundBrick( L"Sounds\\arkbrick.wav" ),
 	soundFart( L"Sounds\\fart.wav" ),
+	soundReady( L"Sounds\\ready.wav" ),
 	pad( Vec2( 400.0f,550.0f ),32.0f,6.0f )
 {
 	const Vec2 gridTopLeft( walls.GetInnerBounds().left,walls.GetInnerBounds().top + topSpace );
@@ -123,20 +124,43 @@ void Game::UpdateModel( float dt )
 	}
 	else if( gameState == 0 )
 	{
+		// wait on title screen until enter is pressed
 		if( wnd.kbd.KeyIsPressed( VK_RETURN ) )
+		{
+			StartRound();
+		}
+	}
+	else if( gameState == 3 )
+	{
+		// check to see if ready wait period is over
+		if( (curWaitTime += dt) > readyWaitTime )
 		{
 			gameState = 1;
 		}
 	}
 }
 
+// enter ready wait for new round
+void Game::StartRound()
+{
+	curWaitTime = 0.0f;
+	soundReady.Play();
+	gameState = 3;
+}
+
 void Game::ComposeFrame()
 {
+	// draw pad if playing or waiting
+	if( gameState == 1 || gameState == 3 )
+	{
+		pad.Draw( gfx );
+	}
+	// draw ball only if playing
 	if( gameState == 1 )
 	{
 		ball.Draw( gfx );
-		pad.Draw( gfx );
 	}
+	// draw bricks and wall always, except for title screen
 	if( gameState != 0 )
 	{
 		for( const Brick& b : bricks )
@@ -152,5 +176,9 @@ void Game::ComposeFrame()
 	else if( gameState == 2 )
 	{
 		SpriteCodex::DrawGameOver( Graphics::GetScreenRect().GetCenter(),gfx );
+	}
+	else if( gameState == 3 )
+	{
+		SpriteCodex::DrawReady( Graphics::GetScreenRect().GetCenter(),gfx );
 	}
 }
