@@ -353,6 +353,54 @@ void Graphics::DrawCircle( int x,int y,int radius,Color c )
 	}
 }
 
+void Graphics::DrawIsoRightTriUL( int x,int y,int size,Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x; loop_x < x + size - cur_line; loop_x++ )
+		{
+			PutPixel( loop_x,loop_y,c );
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriUR( int x,int y,int size,Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x + cur_line; loop_x < x + size; loop_x++ )
+		{
+			PutPixel( loop_x,loop_y,c );
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriBL( int x,int y,int size,Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x; loop_x < x + cur_line; loop_x++ )
+		{
+			PutPixel( loop_x,loop_y,c );
+		}
+	}
+}
+
+void Graphics::DrawIsoRightTriBR( int x,int y,int size,Color c )
+{
+	for( int loop_y = y; loop_y < y + size; loop_y++ )
+	{
+		const int cur_line = loop_y - y;
+		for( int loop_x = x + size - cur_line; loop_x < x + size; loop_x++ )
+		{
+			PutPixel( loop_x,loop_y,c );
+		}
+	}
+}
+
 
 //////////////////////////////////////////////////
 //           Graphics Exception
