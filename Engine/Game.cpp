@@ -27,7 +27,7 @@ Game::Game( MainWindow& wnd )
 	wnd( wnd ),
 	gfx( wnd ),
 	ball( Vec2( 300.0f + 24.0f,300.0f ),Vec2( -1.0f,-1.0f ) ),
-	walls( 0.0f,float( gfx.ScreenWidth ),0.0f,float( gfx.ScreenHeight ) ),
+	walls( Graphics::GetScreenRect().GetExpanded( -40.0f ),40.0f,{ 20,60,200 } ),
 	soundPad( L"Sounds\\arkpad.wav" ),
 	soundBrick( L"Sounds\\arkbrick.wav" ),
 	soundFart( L"Sounds\\fart.wav" ),
@@ -70,7 +70,7 @@ void Game::UpdateModel( float dt )
 	if( !gameIsOver )
 	{
 		pad.Update( wnd.kbd,dt );
-		pad.DoWallCollision( walls );
+		pad.DoWallCollision( walls.GetInnerBounds() );
 
 		ball.Update( dt );
 
@@ -111,7 +111,7 @@ void Game::UpdateModel( float dt )
 			soundPad.Play();
 		}
 
-		const int ballWallColResult = ball.DoWallCollision( walls );
+		const int ballWallColResult = ball.DoWallCollision( walls.GetInnerBounds() );
 		if( ballWallColResult == 1 )
 		{
 			pad.ResetCooldown();
@@ -136,4 +136,5 @@ void Game::ComposeFrame()
 	{
 		b.Draw( gfx );
 	}
+	walls.Draw( gfx );
 }
