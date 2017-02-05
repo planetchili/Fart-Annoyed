@@ -20,13 +20,12 @@
  ******************************************************************************************/
 #include "MainWindow.h"
 #include "Game.h"
-#include "Beveler.h"
 
 Game::Game( MainWindow& wnd )
 	:
 	wnd( wnd ),
 	gfx( wnd ),
-	ball( Vec2( 300.0f + 24.0f,300.0f ),Vec2( -1.0f,-1.0f ) ),
+	ball( Graphics::GetScreenRect().GetCenter(),Vec2( -0.5f,-1.0f ) ),
 	walls( RectF::FromCenter( Graphics::GetScreenRect().GetCenter(),fieldWidth / 2.0f,fieldHeight / 2.0f ),
 		   wallThickness,wallColor ),
 	soundPad( L"Sounds\\arkpad.wav" ),
