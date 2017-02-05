@@ -7,6 +7,8 @@ Walls::Walls( const RectF& innerBounds_in,float thickness_in,Color baseColor )
 	thickness( thickness_in ),
 	bev( baseColor )
 {
+	// make sure the thickness divides evenly into 2 for layout purposes
+	assert( int( thickness ) % 2 == 0 );
 	assert( innerBounds.GetExpanded( thickness ).IsContainedBy( Graphics::GetScreenRect() ) );
 }
 
@@ -17,6 +19,7 @@ const RectF& Walls::GetInnerBounds() const
 
 void Walls::Draw( Graphics& gfx ) const
 {
-	bev.DrawBevelFrame( innerBounds.GetExpanded( thickness ),int( thickness ),gfx );
+	// divide thickness by two becuase the value passed in the thickness used for the inner bevel and the outer bevel
+	bev.DrawBevelFrame( innerBounds.GetExpanded( thickness ),int( thickness ) / 2,gfx );
 }
 
