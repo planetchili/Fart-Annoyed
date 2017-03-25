@@ -64,3 +64,5 @@ RectF Ball::GetRect() const
 {
 	return RectF::FromCenter(mPosition, mRadius, mRadius);
 }
+
+//
