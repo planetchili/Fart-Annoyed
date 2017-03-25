@@ -21,13 +21,14 @@
 #include "MainWindow.h"
 #include "Game.h"
 
-Game::Game( MainWindow& wnd )
+Game::Game(MainWindow& wnd)
 	:
-	wnd( wnd ),
-	gfx( wnd ),
-	walls(RectF(0.0f, (float) gfx.ScreenWidth, 0.0f, (float) gfx.ScreenHeight)),
-	ball(Vec2(300.0f, 300.0f), Vec2(100.0f, 100.0f)),
-	brick(RectF(200.0f, 100.0f, 300.0f, 330.0f), Colors::Red)
+	wnd(wnd),
+	gfx(wnd),
+	walls(RectF(0.0f, (float)gfx.ScreenWidth, 0.0f, (float)gfx.ScreenHeight)),
+	brickDestroy(L"Sounds\\arkbrick.wav"),
+	ball(Vec2(300.0f, 300.0f), Vec2(300.0f, 300.0f)),
+	brick(RectF(450.0f, 550.0f, 480.0f, 515.0f), Colors::Red)
 {
 }
 
@@ -43,13 +44,20 @@ void Game::UpdateModel()
 {
 	const float dt = delta.Mark();
 	ball.Update(dt);
-	ball.WallCollision(walls);
-	
-	
+
+	if (brick.BallCollision(ball))
+	{
+		brickDestroy.Play();
+	}
+
+	if (ball.WallCollision(walls))
+	{
+		brickDestroy.Play();
+	}
 }
 
 void Game::ComposeFrame()
 {
-	//brick.DrawBrick(gfx);
+	brick.DrawBrick(gfx);
 	ball.DrawBall(gfx);
 }

@@ -6,6 +6,19 @@ Brick::Brick(const RectF& position, Color brickColor) :
 {
 }
 
+bool Brick::BallCollision(Ball& ball)
+{
+	if (!mBrickDestroyed && mPosition.IsOverLapping(ball.GetRect() ))
+	{
+		ball.ReboundY();
+		mBrickDestroyed = true;
+
+		return true;
+	}
+
+	return false;
+}
+
 void Brick::DrawBrick(Graphics& gfx) const
 {
 	if (!mBrickDestroyed)

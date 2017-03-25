@@ -10,11 +10,10 @@ public:
 	Ball(const Vec2& ballPosition, const Vec2& ballVelocity);
 	void Update(float delta);
 	bool WallCollision(const RectF& walls);	
+	RectF GetRect() const;
 	void DrawBall(Graphics& gfx) const;
-private:
 	void ReboundX();
 	void ReboundY();
-	RectF GetRect() const;
 private:
 	static constexpr float mRadius = 7.0f;
 	Vec2 mPosition;
