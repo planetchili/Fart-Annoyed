@@ -55,6 +55,11 @@ void Ball::ReboundY()
 	mVelocity.y = -mVelocity.y;
 }
 
+Vec2 Ball::GetVelocity() const
+{
+	return mVelocity;
+}
+
 void Ball::DrawBall(Graphics& gfx) const
 {
 	SpriteCodex::DrawBall(mPosition, gfx);

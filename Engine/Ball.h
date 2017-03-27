@@ -14,6 +14,7 @@ public:
 	void DrawBall(Graphics& gfx) const;
 	void ReboundX();
 	void ReboundY();
+	Vec2 GetVelocity() const;
 private:
 	static constexpr float mRadius = 7.0f;
 	Vec2 mPosition;

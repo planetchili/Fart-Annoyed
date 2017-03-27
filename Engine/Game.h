@@ -27,6 +27,7 @@
 #include "Ball.h"
 #include "FrameTimer.h"
 #include "Sound.h"
+#include "Paddle.h"
 
 class Game
 {
@@ -49,7 +50,14 @@ private:
 	FrameTimer delta;
 	RectF walls;
 	Sound brickDestroy;
+	Sound padHit;
 	Ball ball;
-	Brick brick;
+	Paddle pad;
+	static constexpr float brickWidth = 400.0f;
+	static constexpr float brickHeight = 24.0f;
+	static constexpr int brickAcross = 18;
+	static constexpr int brickDown = 4;
+	static constexpr int totalBricks = brickAcross * brickDown;
+	Brick bricks[totalBricks];
 	/********************************/
 };
