@@ -12,7 +12,9 @@ public:
 	Brick(const RectF& position, Color brickColor);
 	bool BallCollision(Ball& ball);
 	void DrawBrick(Graphics& gfx) const;
+	
 private:
+	static constexpr float padding = 1.0f;
 	RectF mPosition;
 	Color mBrickColor;
 	bool mBrickDestroyed = false;

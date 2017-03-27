@@ -23,6 +23,6 @@ void Brick::DrawBrick(Graphics& gfx) const
 {
 	if (!mBrickDestroyed)
 	{
-		gfx.DrawRect(mPosition, mBrickColor);
+		gfx.DrawRect(mPosition.GetExpanded(-padding), mBrickColor);
 	}
 }
