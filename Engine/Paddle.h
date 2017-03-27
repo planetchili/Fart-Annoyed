@@ -17,6 +17,7 @@ public:
 	void Draw(Graphics& gfx) const;
 	RectF GetRect() const;
 private:
+	static constexpr float wingWidth = 20.0f;
 	Vec2 mPosition;
 	float mHalfWidth;
 	float mHalfHeight;

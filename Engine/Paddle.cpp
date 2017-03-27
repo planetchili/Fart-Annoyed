@@ -48,6 +48,9 @@ bool Paddle::BallCollision(Ball& ball)
 void Paddle::Draw(Graphics& gfx) const
 {
 	RectF padRect = GetRect();
+	gfx.DrawRect(padRect, Colors::Red);
+	padRect.mLeft += wingWidth;
+	padRect.mRight -= wingWidth;
 	gfx.DrawRect(padRect, Colors::White);
 }
 
