@@ -53,7 +53,7 @@ private:
 	Sound padHit;
 	Ball ball;
 	Paddle pad;
-	static constexpr float brickWidth = 400.0f;
+	static constexpr float brickWidth = 40.0f;
 	static constexpr float brickHeight = 24.0f;
 	static constexpr int brickAcross = 18;
 	static constexpr int brickDown = 4;
