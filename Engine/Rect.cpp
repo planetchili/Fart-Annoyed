@@ -97,3 +97,20 @@ void Rect::toggle_active()
 {
 	active = !active;
 }
+
+float Rect::get_right()
+{
+	return right;
+}
+float Rect::get_top()
+{
+	return top;
+}
+float Rect::get_bottom()
+{
+	return bottom;
+}
+float Rect::get_left()
+{
+	return left;
+}

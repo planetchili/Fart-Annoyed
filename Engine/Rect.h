@@ -30,6 +30,11 @@ public:
 	bool is_active() const;
 	void toggle_active();
 
+	float get_top();
+	float get_bottom();
+	float get_left();
+	float get_right();
+
 private:
 
 	float top;
